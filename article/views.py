@@ -2,6 +2,9 @@ from django.shortcuts import render
 from article.models import Home
 from article.models import About
 from article.models import Code
+from article.forms import MomentForm
+from django.http import HttpResponseRedirect
+import os
 
 
 def home(request):
@@ -17,3 +20,15 @@ def about(request):
 def code(request):
     code_list = Code.objects.all()
     return render(request, 'code.html', {'code_list': code_list})
+
+
+def moments_input(request):
+    if request.method == 'POST':
+        form = MomentForm(request.POST)
+        if form.is_valid():
+            moment = form.save()
+            moment.save()
+            return render(request, 'index.html', {'form': form})
+    else:
+        form = MomentForm()
+        return render(request, 'index.html', {'form': form})

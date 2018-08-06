@@ -22,3 +22,8 @@ class Code(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Moment(models.Model):
+    user_name = models.CharField(max_length=20, default='匿名')
+    content = models.CharField(max_length=200)
